@@ -76,11 +76,37 @@ class Document(object):
             return index
 
         filepath = self.root + self.path
-        if isfile(filepath):
+        if isfile(filepath) or isdir(filepath):
             return filepath
-        elif isdir(filepath):
-            raise DocumentError(404, "Index not found, dirlist")
         raise DocumentError(404, "File Not Found")
+
+    def get_dirlist(self):
+        content = []
+        content.append(f"# Directory listing for {self.path}")
+        path = self.path
+        if not path.endswith("/"):
+            path = path + "/"
+        for name in os.listdir(self.filepath):
+            fullpath = join(self.filepath, name)
+            if isdir(fullpath):
+                content.append(f"* [{name}/]({path}{name}/)")
+            if isfile(fullpath):
+                content.append(f"* [{name}]({path}{name})")
+        content = "\n".join(content)
+        return self.render_markdown(content)
+
+    def render_markdown(self, mdown_content):
+        # Markdown to HTML
+        content = convert_md_source(mdown_content)
+        # Render in template
+        content = self.markdown_template.format(
+            title=basename(self.filepath), style=DEFAULT_MARKDOWN_STYLE, content=content
+        )
+        self.content_length = len(content)
+        self.last_modified = date_time_string(os.path.getmtime(self.filepath))
+        # Somehow change the type, since we're rendering this as HTML
+        self._type = "text/html"
+        return content.encode()
 
     def get_content_markdown(self):
         """
@@ -88,17 +114,7 @@ class Document(object):
         """
         with open(self.filepath, "r") as fh:
             mdown_content = fh.read()
-            fs = os.fstat(fh.fileno())
-        content = convert_md_source(mdown_content)
-        # Render in template
-        content = self.markdown_template.format(
-            title=basename(self.filepath), style=DEFAULT_MARKDOWN_STYLE, content=content
-        )
-        self.content_length = len(content)
-        self.last_modified = date_time_string(fs.st_mtime)
-        # Somehow change the type, since we're rendering this as HTML
-        self._type = "text/html"
-        return content.encode()
+        return self.render_markdown(mdown_content)
 
     def get_content(self):
         """
@@ -107,17 +123,19 @@ class Document(object):
         if self._type == "text/markdown":
             return self.get_content_markdown()
 
+        if isdir(self.filepath):
+            return self.get_dirlist()
+
         try:
             fh = open(self.filepath, "rb")
             content = fh.read()
-            fs = os.fstat(fh.fileno())
         except OSError:
             raise DocumentError(404, "File Not Found or I/O Error")
         finally:
             # Close file handler
             fh.close()
         # retrieve content length & last modified time.
-        self.content_length = fs[6]
-        self.last_modified = date_time_string(fs.st_mtime)
+        self.content_length = len(content)
+        self.last_modified = date_time_string(os.path.getmtime(self.filepath))
         # Return file content
         return content

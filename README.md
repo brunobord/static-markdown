@@ -80,18 +80,19 @@ Here is a table describing the different pages rendered with the given URL in yo
 | URL                | Content                | Content type | Status Code   |
 |:-------------------|:-----------------------|:-------------|:--------------|
 | /                  | index.html             | text/html    | 200 OK        |
-| /empty             | 404 page               | text/html    | 404 NOT FOUND |
+| /empty             | directory listing               | text/html    | 200 OK |
 | /images/knight.png | knight.png (as binary) | image/png    | 200 OK        |
 | /mdown/            | index.md (as HTML)     | text/html    | 200 OK        |
 | /mdown/index.md    | index.md (as HTML)     | text/html    | 200 OK        |
 | /mdown-readme      | README.md (as HTML)    | text/html    | 200 OK        |
+| /subdir/           | subdir/index.html      | text/html    | 200 OK        |
 | /subdir/           | subdir/index.html      | text/html    | 200 OK        |
 
 ### Indexes
 
 When browsing a directory, ``serve-md`` will look after the following files, in that specific order: "index.html", "index.htm", "index.md", "README.md", "readme.md". The first one of them to be found will be served as the index page of the directory.
 
-*Note:* If none of them is found, ``serve-md`` will return a ``404 NOT FOUND`` error. It'll display a directory listing in the near future (it's on our TODO).
+If none of them is found, ``serve-md`` will return a directory listing. If you're using the "Markdown template" feature, it'll be used when rendering this page.
 
 ### Markdown templates
 

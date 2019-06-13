@@ -36,4 +36,15 @@ def test_alternate_index():
 
 def test_empty_404():
     response = requests.get("http://127.0.0.1:8080/empty/")
-    assert response.status_code == 404
+    assert response.status_code == 200
+
+
+def test_dirlist():
+    response = requests.get("http://127.0.0.1:8080/no-index/")
+    assert response.status_code == 200
+    content = response.content
+    # Another Directory
+    assert b'<a href="/no-index/subdir/">subdir/</a>' in content
+    # Two files
+    assert b'<a href="/no-index/file.html">file.html</a>' in content
+    assert b'<a href="/no-index/other-file.html">other-file.html</a>' in content
