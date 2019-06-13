@@ -4,6 +4,7 @@
 
 * Readme instructions to install from PyPI.
 * Enabled directory listing.
+* Added twine in extra requirements (dev).
 
 ## v0.1.0 (2019-06-13)
 
