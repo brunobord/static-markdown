@@ -6,13 +6,22 @@ It serves regular HTTP content (HTML, JS, CSS, images, etc), but when you're bro
 
 ## Installation
 
+### via PyPI
+
+Install this tool using pip to download it [from PyPI](https://pypi.org/project/static-markdown/). You may prefer to use a virtualenv, but you may also want to install "user-wide".
+
+```shell
+pip install static-markdown
+pip install --user static-markdown
+```
+
+### Using the source
+
 We're advising you to use ``virtualenv`` to install this package. Clone this repository, and, inside your *virtualenv*, run the following:
 
 ```shell
 pip install -e ./
 ```
-
-*Note:* it'll be soon possible to download and install it from PyPI. Stay tuned!
 
 ## Usage
 

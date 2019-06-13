@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-Nothing here yet.
+* Readme instructions to install from PyPI.
 
 ## v0.1.0 (2019-06-13)
 
