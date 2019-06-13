@@ -77,16 +77,16 @@ Let's consider the following path tree:
 
 Here is a table describing the different pages rendered with the given URL in your browser
 
-| URL                | Content                | Content type | Status Code   |
-|:-------------------|:-----------------------|:-------------|:--------------|
-| /                  | index.html             | text/html    | 200 OK        |
-| /empty             | directory listing               | text/html    | 200 OK |
-| /images/knight.png | knight.png (as binary) | image/png    | 200 OK        |
-| /mdown/            | index.md (as HTML)     | text/html    | 200 OK        |
-| /mdown/index.md    | index.md (as HTML)     | text/html    | 200 OK        |
-| /mdown-readme      | README.md (as HTML)    | text/html    | 200 OK        |
-| /subdir/           | subdir/index.html      | text/html    | 200 OK        |
-| /subdir/           | subdir/index.html      | text/html    | 200 OK        |
+| URL                | Content                | Content type | Status Code |
+|:-------------------|:-----------------------|:-------------|:------------|
+| /                  | index.html             | text/html    | 200 OK      |
+| /empty             | directory listing      | text/html    | 200 OK      |
+| /images/knight.png | knight.png (as binary) | image/png    | 200 OK      |
+| /mdown/            | index.md (as HTML)     | text/html    | 200 OK      |
+| /mdown/index.md    | index.md (as HTML)     | text/html    | 200 OK      |
+| /mdown-readme      | README.md (as HTML)    | text/html    | 200 OK      |
+| /subdir            | subdir/index.html      | text/html    | 200 OK      |
+| /subdir/           | subdir/index.html      | text/html    | 200 OK      |
 
 ### Indexes
 
