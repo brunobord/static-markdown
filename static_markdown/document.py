@@ -32,6 +32,16 @@ class DocumentError(Exception):
         self.message = message
 
 
+class RedirectionException(Exception):
+    """
+    Redirect to location
+    """
+
+    def __init__(self, location, status_code=301):
+        self.location = location
+        self.status_code = status_code
+
+
 class Document(object):
     def __init__(self, root, path, markdown_template=None):
         # Init
@@ -64,6 +74,10 @@ class Document(object):
         """
         indexes = ("index.html", "index.htm", "index.md", "README.md", "readme.md")
         temp_path = self.root + path
+        # This is a directory, but it does not end with "/"
+        if isdir(temp_path) and not path.endswith("/"):
+            raise RedirectionException(self.path + "/")
+
         if path == "/" or isdir(temp_path):
             for index in indexes:
                 index_path = join(temp_path, index)
@@ -81,6 +95,7 @@ class Document(object):
         filepath = self.root + self.path
         if isfile(filepath) or isdir(filepath):
             return filepath
+        # I don't know what it should be here...
         raise DocumentError(404, "File Not Found")
 
     def get_dirlist(self):

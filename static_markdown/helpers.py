@@ -1,5 +1,4 @@
 import email
-import posixpath
 import time
 import urllib.parse
 from contextlib import contextmanager
@@ -55,5 +54,4 @@ def normalize_path(path):
         path = urllib.parse.unquote(path, errors="surrogatepass")
     except UnicodeDecodeError:
         path = urllib.parse.unquote(path)
-    path = posixpath.normpath(path)
     return path

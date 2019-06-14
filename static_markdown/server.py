@@ -4,13 +4,14 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os.path import abspath, isdir
 
-from .document import Document, DocumentError
+from .document import Document, DocumentError, RedirectionException
 from .helpers import DEFAULT_MARKDOWN_TEMPLATE, cd
 
 
 class Server(HTTPServer):
     def __init__(self, *args, **kwargs):
         self._root = kwargs.pop("root", ".")
+        self._root_url = kwargs.pop("root_url", ".")
         _template_handler = kwargs.pop("markdown_template", None)
         if _template_handler:
             self._markdown_template = _template_handler.read()
@@ -38,6 +39,11 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
         except DocumentError as exc:
             self.send_error(exc.status_code, exc.message)
             return
+        except RedirectionException as exc:
+            self.send_response(HTTPStatus.MOVED_PERMANENTLY)
+            self.send_header("Location", f"{exc.location}")
+            self.end_headers()
+            return
 
         # Before sending the headers, send the response status
         self.send_response(HTTPStatus.OK)
@@ -63,18 +69,14 @@ def port(number):
     raise argparse.ArgumentTypeError("port must be 0-65535")
 
 
-def serve(root, port=8080, markdown_template=None):
+def serve(root, port=8080, markdown_template=None, scheme="http"):
     root = abspath(root)
     if not isdir(root):
         print("Error: `{}` is not a directory".format(root))
         return
 
-    print(
-        "Serving `{root}`..."
-        "\nGo to: {scheme}://127.0.0.1:{port}".format(
-            scheme="http", root=root, port=port
-        )
-    )
+    root_url = f"{scheme}://127.0.0.1:{port}"
+    print(f"Serving `{root}`..." f"\nGo to: {root_url}")
     with cd(root):
         server_address = ("", port)
         httpd = Server(
@@ -82,6 +84,7 @@ def serve(root, port=8080, markdown_template=None):
             StaticMarkdownHandler,
             root=root,
             markdown_template=markdown_template,
+            root_url=root_url,
         )
         try:
             httpd.serve_forever()

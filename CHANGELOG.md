@@ -6,6 +6,7 @@
 * Enabled directory listing.
 * Added twine in extra requirements (dev).
 * Fix 404 error when trying to browse file with spaces in their names (#1).
+* Redirect to URL with trailing slash when pointing at a directory (#4).
 
 ## v0.1.0 (2019-06-13)
 
