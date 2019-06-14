@@ -1,5 +1,7 @@
 import email
+import posixpath
 import time
+import urllib.parse
 from contextlib import contextmanager
 from os import chdir, getcwd
 
@@ -43,3 +45,15 @@ def date_time_string(timestamp=None):
     if timestamp is None:
         timestamp = time.time()
     return email.utils.formatdate(timestamp, usegmt=True)
+
+
+def normalize_path(path):
+    """
+    Return URL-entity-free pathname
+    """
+    try:
+        path = urllib.parse.unquote(path, errors="surrogatepass")
+    except UnicodeDecodeError:
+        path = urllib.parse.unquote(path)
+    path = posixpath.normpath(path)
+    return path

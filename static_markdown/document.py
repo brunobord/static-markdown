@@ -7,7 +7,7 @@ from markdown.extensions.toc import TocExtension
 from mdx_gfm import GithubFlavoredMarkdownExtension
 from slugify import slugify
 
-from .helpers import DEFAULT_MARKDOWN_STYLE, date_time_string
+from .helpers import DEFAULT_MARKDOWN_STYLE, date_time_string, normalize_path
 
 
 def convert_md_source(source):
@@ -40,7 +40,7 @@ class Document(object):
 
         # Seek and load
         self.root = root
-        self.path = path
+        self.path = normalize_path(path)
         self.markdown_template = markdown_template
         self.filepath = self.get_filepath()
         self._type = self.guess_type()
@@ -71,6 +71,9 @@ class Document(object):
                     return index_path
 
     def get_filepath(self):
+        """
+        Return the filepath on the filesystem.
+        """
         index = self.find_index(self.path)
         if index:
             return index
