@@ -8,6 +8,7 @@
 * Fix 404 error when trying to browse file with spaces in their names (#1).
 * Redirect to URL with trailing slash when pointing at a directory (#4).
 * Document the fact that the server is not production-ready (#5).
+* A better logging using loguru.
 
 ## v0.1.0 (2019-06-13)
 

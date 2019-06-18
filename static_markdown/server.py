@@ -1,11 +1,24 @@
 #!/usr/bin/env python3
 import argparse
+import sys
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os.path import abspath, isdir
 
+from loguru import logger
+
 from .document import Document, DocumentError, RedirectionException
 from .helpers import DEFAULT_MARKDOWN_TEMPLATE, cd
+
+log_format = (
+    "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> "
+    "| <level>{level: <8}</level> | <level>{message}</level>"
+)
+
+logger.configure(
+    handlers=[{"sink": sys.stderr, "format": log_format}],
+    extra={"reqid": "-", "ip": "-", "user": "-"},
+)
 
 
 class Server(HTTPServer):
@@ -55,6 +68,12 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
 
         self.wfile.write(document.content)
 
+    def log_message(self, format, *args):
+        logger.info("%s - %s" % (self.address_string(), format % args))
+
+    def log_error(self, format, *args):
+        logger.error("%s - %s" % (self.address_string(), format % args))
+
 
 def port(number):
     """
@@ -72,11 +91,11 @@ def port(number):
 def serve(root, port=8080, markdown_template=None, scheme="http"):
     root = abspath(root)
     if not isdir(root):
-        print("Error: `{}` is not a directory".format(root))
+        logger.error("Error: `{}` is not a directory".format(root))
         return
 
     root_url = f"{scheme}://127.0.0.1:{port}"
-    print(f"Serving `{root}`..." f"\nGo to: {root_url}")
+    logger.info(f"Serving `{root}`..." f"\nGo to: {root_url}")
     with cd(root):
         server_address = ("", port)
         httpd = Server(
@@ -90,7 +109,7 @@ def serve(root, port=8080, markdown_template=None, scheme="http"):
             httpd.serve_forever()
         except KeyboardInterrupt:
             pass
-    print("Bye...")
+    logger.info("Bye...")
 
 
 def main():
