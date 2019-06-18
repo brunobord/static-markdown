@@ -1,7 +1,7 @@
 import requests
 
 
-def test_home():
+def test_home(http_server):
     response = requests.get("http://127.0.0.1:8080/index.html")
     assert response.status_code == 200
     index_html = response.content
@@ -10,7 +10,7 @@ def test_home():
     assert response.content == index_html
 
 
-def test_subdir():
+def test_subdir(http_server):
     response = requests.get("http://127.0.0.1:8080/subdir/index.html")
     assert response.status_code == 200
     index_html = response.content
@@ -19,12 +19,12 @@ def test_subdir():
     assert response.content == index_html
 
 
-def test_404():
+def test_404(http_server):
     response = requests.get("http://127.0.0.1:8080/unknown.html")
     assert response.status_code == 404
 
 
-def test_alternate_index():
+def test_alternate_index(http_server):
     response = requests.get("http://127.0.0.1:8080/alternate-index/")
     assert response.status_code == 200
     index_html = response.content
@@ -34,12 +34,12 @@ def test_alternate_index():
     assert response.content == b"I am the alternate index\n"
 
 
-def test_empty_404():
+def test_empty_404(http_server):
     response = requests.get("http://127.0.0.1:8080/empty/")
     assert response.status_code == 200
 
 
-def test_dirlist():
+def test_dirlist(http_server):
     response = requests.get("http://127.0.0.1:8080/no-index/")
     assert response.status_code == 200
     content = response.content

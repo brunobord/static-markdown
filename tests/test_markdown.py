@@ -1,7 +1,7 @@
 import requests
 
 
-def test_index_mdown():
+def test_index_mdown(http_server):
     response = requests.get("http://127.0.0.1:8080/mdown/index.md")
     assert response.status_code == 200
     assert response.content.startswith(b"<!DOCTYPE html>")
@@ -16,7 +16,7 @@ def test_index_mdown():
     assert response.content == index_md_content
 
 
-def test_index_readme():
+def test_index_readme(http_server):
     response = requests.get("http://127.0.0.1:8080/mdown-readme/index.md")
     assert response.status_code == 404
 

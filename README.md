@@ -115,18 +115,12 @@ We've used various minimalist CSS frameworks for rendering and layout:
 3. Implement stuff.
 4. Open a Pull Request.
 
-*Note:* I'm afraid that testing is a bit awkward right now, you'll have to open two shell sessions. In the first one, run this:
+**Important:** Each time you're modifying any line of the server's code, if you want to test your patch **live**, you **HAVE** to stop and restart the application.
 
-```shell
-make serve
-```
+### Run automated tests
 
-In the other one, run tests with:
+In a shell session, run tests with:
 
 ```shell
 make test
 ```
-
-Your tests will hit the launched server that serves the ``example`` directory.
-
-**Important:** Each time you're modifying any line of the server's code, you **HAVE** to stop and restart the server.

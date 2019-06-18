@@ -9,6 +9,7 @@
 * Redirect to URL with trailing slash when pointing at a directory (#4).
 * Document the fact that the server is not production-ready (#5).
 * A better logging using loguru.
+* A better way to test the application, without having to start the server in another shell.
 
 ## v0.1.0 (2019-06-13)
 

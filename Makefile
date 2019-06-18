@@ -25,3 +25,8 @@ install-dev: venv/bin/serve-md
 # Clean test/venv files and directories
 clean:
 	rm -Rf venv/ .tox/ build/
+
+# Cleanup pytest utilities
+xkill:
+	$(VENV)pytest --xkill
+	rm -Rf .xprocess

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+
 import sys
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -75,19 +76,6 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
         logger.error("%s - %s" % (self.address_string(), format % args))
 
 
-def port(number):
-    """
-    A port value is a number between 0 and 65535.
-    """
-    try:
-        number = int(number)
-    except ValueError:
-        raise argparse.ArgumentTypeError("invalid int value: '{}'".format(number))
-    if 0 <= number <= 65535:
-        return number
-    raise argparse.ArgumentTypeError("port must be 0-65535")
-
-
 def serve(root, port=8080, markdown_template=None, scheme="http"):
     root = abspath(root)
     if not isdir(root):
@@ -112,6 +100,19 @@ def serve(root, port=8080, markdown_template=None, scheme="http"):
     logger.info("Bye...")
 
 
+def port(number):
+    """
+    A port value is a number between 0 and 65535.
+    """
+    try:
+        number = int(number)
+    except ValueError:
+        raise argparse.ArgumentTypeError("invalid int value: '{}'".format(number))
+    if 0 <= number <= 65535:
+        return number
+    raise argparse.ArgumentTypeError("port must be 0-65535")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser = argparse.ArgumentParser()
@@ -128,7 +129,3 @@ def main():
 
     args = parser.parse_args()
     serve(root=args.root, port=args.port, markdown_template=args.markdown_template)
-
-
-if __name__ == "__main__":
-    main()
