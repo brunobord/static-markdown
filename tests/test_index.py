@@ -19,11 +19,6 @@ def test_subdir(http_server):
     assert response.content == index_html
 
 
-def test_404(http_server):
-    response = requests.get("http://127.0.0.1:8080/unknown.html")
-    assert response.status_code == 404
-
-
 def test_alternate_index(http_server):
     response = requests.get("http://127.0.0.1:8080/alternate-index/")
     assert response.status_code == 200

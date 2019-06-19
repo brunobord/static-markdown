@@ -49,7 +49,9 @@ Stop the server with Ctrl-C.
 ### Options
 
 ```
-usage: serve-md [-h] [-p PORT] [--markdown-template MARKDOWN_TEMPLATE] [root]
+usage: serve-md [-h] [-p PORT] [--markdown-template MARKDOWN_TEMPLATE]
+                [--version]
+                [root]
 
 positional arguments:
   root                  Path to serve statically
@@ -59,6 +61,7 @@ optional arguments:
   -p PORT, --port PORT  Port number (0-65535)
   --markdown-template MARKDOWN_TEMPLATE
                         Path to an alternate HTML template for Markdown files
+  --version             Return version and exit
 ```
 
 ### Browsing

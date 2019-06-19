@@ -35,6 +35,8 @@ class Server(HTTPServer):
 
 
 class StaticMarkdownHandler(BaseHTTPRequestHandler):
+    server_version = "Static-Markdown/" + __version__
+
     @property
     def root(self):
         if not hasattr(self, "_root"):
@@ -74,6 +76,12 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
 
     def log_error(self, format, *args):
         logger.error("%s - %s" % (self.address_string(), format % args))
+
+    def version_string(self):
+        """
+        Return the server software version string.
+        """
+        return self.server_version
 
 
 def serve(root, port=8080, markdown_template=None, scheme="http"):
@@ -125,7 +133,9 @@ def main():
         type=argparse.FileType("r"),
         help="Path to an alternate HTML template for Markdown files",
     )
-    parser.add_argument("--version")
+    parser.add_argument(
+        "--version", action="store_true", default=False, help="Return version and exit"
+    )
     args = parser.parse_args()
     if args.version:
         print(f"Static Markdown v{__version__}")

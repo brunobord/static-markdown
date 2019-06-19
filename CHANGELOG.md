@@ -12,6 +12,7 @@
 * A better way to test the application, without having to start the server in another shell.
 * Added travis support for CI.
 * Implement version handling via a ``__version__`` module property.
+* Added server name and version in the returned Server headers (#6).
 
 ## v0.1.0 (2019-06-13)
 

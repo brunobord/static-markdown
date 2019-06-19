@@ -18,3 +18,8 @@ def test_redirect_subdir(http_server):
     headers = response.headers
     assert "Location" in headers
     assert headers["Location"] == "/subdir/"
+
+
+def test_404(http_server):
+    response = requests.get("http://127.0.0.1:8080/unknown.html")
+    assert response.status_code == 404
