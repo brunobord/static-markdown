@@ -1,18 +1,23 @@
 # Changelog
 
-## master (unreleased)
+## v0.2.0 (2019-06-19)
 
-* Readme instructions to install from PyPI.
+### New features
+
 * Enabled directory listing.
-* Added twine in extra requirements (dev).
-* Fix 404 error when trying to browse file with spaces in their names (#1).
 * Redirect to URL with trailing slash when pointing at a directory (#4).
-* Document the fact that the server is not production-ready (#5).
 * A better logging using loguru.
 * A better way to test the application, without having to start the server in another shell.
-* Added travis support for CI.
 * Implement version handling via a ``__version__`` module property.
 * Added server name and version in the returned Server headers (#6).
+
+### Fixes & other changes
+
+* Fix 404 error when trying to browse file with spaces in their names (#1).
+* Readme instructions to install from PyPI.
+* Document the fact that the server is not production-ready (#5).
+* Added twine in extra requirements (dev).
+* Added travis support for CI.
 
 ## v0.1.0 (2019-06-13)
 
