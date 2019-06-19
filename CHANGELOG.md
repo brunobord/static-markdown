@@ -1,5 +1,9 @@
 # Changelog
 
+## master (unreleased)
+
+Nothing here yet.
+
 ## v0.2.0 (2019-06-19)
 
 ### New features
