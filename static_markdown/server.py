@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-
 import sys
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -8,6 +7,7 @@ from os.path import abspath, isdir
 
 from loguru import logger
 
+from . import __version__
 from .document import Document, DocumentError, RedirectionException
 from .helpers import DEFAULT_MARKDOWN_TEMPLATE, cd
 
@@ -115,7 +115,6 @@ def port(number):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser = argparse.ArgumentParser()
     parser.add_argument("root", nargs="?", default=".", help="Path to serve statically")
     parser.add_argument(
         "-p", "--port", type=port, default=8080, help="Port number (0-65535)"
@@ -126,6 +125,9 @@ def main():
         type=argparse.FileType("r"),
         help="Path to an alternate HTML template for Markdown files",
     )
-
+    parser.add_argument("--version")
     args = parser.parse_args()
+    if args.version:
+        print(f"Static Markdown v{__version__}")
+        return
     serve(root=args.root, port=args.port, markdown_template=args.markdown_template)
