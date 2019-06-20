@@ -49,7 +49,10 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
             self._markdown_template = getattr(self.server, "_markdown_template")
         return self._markdown_template
 
-    def do_GET(self):
+    def get_document(self):
+        """
+        Return the appropriate document corresponding to the path.
+        """
         try:
             document = Document(self.root, self.path, self.markdown_template)
         except DocumentError as exc:
@@ -68,13 +71,32 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
         self.send_header("Last-Modified", document.last_modified)
         # Ending headers here
         self.end_headers()
+        return document
 
-        self.wfile.write(document.content)
+    def do_HEAD(self):
+        """
+        Handle HEAD requests
+        """
+        self.get_document()
+
+    def do_GET(self):
+        """
+        Handle GET requests
+        """
+        document = self.get_document()
+        if document:
+            self.wfile.write(document.content)
 
     def log_message(self, format, *args):
+        """
+        Log handling
+        """
         logger.info("%s - %s" % (self.address_string(), format % args))
 
     def log_error(self, format, *args):
+        """
+        Error log handling
+        """
         logger.error("%s - %s" % (self.address_string(), format % args))
 
     def version_string(self):

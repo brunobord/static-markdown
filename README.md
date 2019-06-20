@@ -101,6 +101,10 @@ When browsing a directory, ``serve-md`` will look after the following files, in 
 
 If none of them is found, ``serve-md`` will return a directory listing. If you're using the "Markdown template" feature, it'll be used when rendering this page.
 
+### HTTP Verbs
+
+GET & HEAD verbs are implemented.
+
 ### Markdown templates
 
 By default, Markdown files will be rendered as HTML using a minimal CSS. Using the ``--markdown-template`` option, you can use your own HTML template with a custom CSS to render generate the ``text/html``. You can find various examples in the ``example-options`` directory in the source repository.

@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-Nothing here yet.
+* Added HEAD implementation (#7).
 
 ## v0.2.0 (2019-06-19)
 
