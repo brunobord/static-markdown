@@ -87,6 +87,16 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
         if document:
             self.wfile.write(document.content)
 
+    def _do_405(self):
+        """
+        Handle POST/PUT/PATCH/DELETE requests. Return 405.
+        """
+        self.send_response(HTTPStatus.METHOD_NOT_ALLOWED)
+        self.end_headers()
+        return
+
+    do_PUT = do_DELETE = do_PATCH = do_POST = _do_405
+
     def log_message(self, format, *args):
         """
         Log handling

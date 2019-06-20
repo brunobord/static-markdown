@@ -34,3 +34,23 @@ def test_head(http_server):
     assert response_head.status_code == 200
     headers_head = response_head.headers
     assert headers_head == headers_get
+
+
+def test_post(http_server):
+    response = requests.post("http://127.0.0.1:8080/")
+    assert response.status_code == 405
+
+
+def test_put(http_server):
+    response = requests.put("http://127.0.0.1:8080/")
+    assert response.status_code == 405
+
+
+def test_delete(http_server):
+    response = requests.delete("http://127.0.0.1:8080/")
+    assert response.status_code == 405
+
+
+def test_patch(http_server):
+    response = requests.patch("http://127.0.0.1:8080/")
+    assert response.status_code == 405
