@@ -24,7 +24,8 @@ DEFAULT_MARKDOWN_TEMPLATE = """<!DOCTYPE html>
 DEFAULT_MARKDOWN_STYLE = """
 body { font-family: Helvetica, arial, freesans, clean, sans-serif; }
 main { max-width: 70ch; padding: 2ch; margin: auto; }
-code { font-family: monospace;}
+code { font-family: monospace; }
+main img { max-width: 70ch; }
 """
 
 

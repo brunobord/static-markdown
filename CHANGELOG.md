@@ -4,6 +4,7 @@
 
 * Added HEAD implementation (#7).
 * Document and make sure that the POST, PUT, DELETE and PATCH verbs would return a 405 error.
+* Default style: limit ``<img>`` width up to the page width.
 
 ## v0.2.0 (2019-06-19)
 
