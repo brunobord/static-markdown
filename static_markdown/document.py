@@ -7,7 +7,7 @@ from markdown.extensions.toc import TocExtension
 from mdx_gfm import GithubFlavoredMarkdownExtension
 from slugify import slugify
 
-from .helpers import DEFAULT_MARKDOWN_STYLE, date_time_string, normalize_path
+from .helpers import date_time_string, normalize_path
 
 
 def convert_md_source(source):
@@ -43,7 +43,7 @@ class RedirectionException(Exception):
 
 
 class Document(object):
-    def __init__(self, root, path, markdown_template=None):
+    def __init__(self, root, path, markdown_template=None, style=None):
         # Init
         self.content_length = 0
         self.last_modified = None
@@ -52,6 +52,7 @@ class Document(object):
         self.root = root
         self.path = normalize_path(path)
         self.markdown_template = markdown_template
+        self.style = style
         self.filepath = self.get_filepath()
         self._type = self.guess_type()
         self.content = self.get_content()
@@ -118,7 +119,7 @@ class Document(object):
         content = convert_md_source(mdown_content)
         # Render in template
         content = self.markdown_template.format(
-            title=basename(self.filepath), style=DEFAULT_MARKDOWN_STYLE, content=content
+            title=basename(self.filepath), style=self.style, content=content
         )
         self.content_length = len(content)
         self.last_modified = date_time_string(os.path.getmtime(self.filepath))

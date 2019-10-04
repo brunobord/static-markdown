@@ -50,7 +50,7 @@ Stop the server with Ctrl-C.
 
 ```
 usage: serve-md [-h] [-p PORT] [--markdown-template MARKDOWN_TEMPLATE]
-                [--version]
+                [--stylesheet STYLESHEET] [--version]
                 [root]
 
 positional arguments:
@@ -61,6 +61,8 @@ optional arguments:
   -p PORT, --port PORT  Port number (0-65535)
   --markdown-template MARKDOWN_TEMPLATE
                         Path to an alternate HTML template for Markdown files
+  --stylesheet STYLESHEET
+                        Path to a custom stylesheet
   --version             Return version and exit
 ```
 
@@ -116,6 +118,16 @@ We've used various minimalist CSS frameworks for rendering and layout:
 * [miligram](https://milligram.io/),
 * [mini css](https://minicss.org/),
 * [Github Markdown CSS](https://github.com/sindresorhus/github-markdown-css),
+
+### Custom styles
+
+If the only thing you need is to customize styles, but not the structure of your HTML page, you can use the ``--stylesheet`` option to point at a CSS file.
+
+Example:
+
+```sh
+serve-md /path/to/directory --stylesheet ~/my-style.css
+```
 
 ## Hack
 

@@ -9,7 +9,7 @@ from loguru import logger
 
 from . import __version__
 from .document import Document, DocumentError, RedirectionException
-from .helpers import DEFAULT_MARKDOWN_TEMPLATE, cd
+from .helpers import DEFAULT_MARKDOWN_STYLE, DEFAULT_MARKDOWN_TEMPLATE, cd
 
 log_format = (
     "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> "
@@ -26,6 +26,14 @@ class Server(HTTPServer):
     def __init__(self, *args, **kwargs):
         self._root = kwargs.pop("root", ".")
         self._root_url = kwargs.pop("root_url", ".")
+        stylesheet = kwargs.pop("stylesheet", None)
+
+        # Default style
+        self._style = DEFAULT_MARKDOWN_STYLE
+        if stylesheet:
+            self._style = stylesheet.read()
+
+        # Template Handling
         _template_handler = kwargs.pop("markdown_template", None)
         if _template_handler:
             self._markdown_template = _template_handler.read()
@@ -49,12 +57,20 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
             self._markdown_template = getattr(self.server, "_markdown_template")
         return self._markdown_template
 
+    @property
+    def style(self):
+        if not hasattr(self, "_style"):
+            self._style = getattr(self.server, "_style")
+        return self._style
+
     def get_document(self):
         """
         Return the appropriate document corresponding to the path.
         """
         try:
-            document = Document(self.root, self.path, self.markdown_template)
+            document = Document(
+                self.root, self.path, self.markdown_template, self.style
+            )
         except DocumentError as exc:
             self.send_error(exc.status_code, exc.message)
             return
@@ -116,7 +132,7 @@ class StaticMarkdownHandler(BaseHTTPRequestHandler):
         return self.server_version
 
 
-def serve(root, port=8080, markdown_template=None, scheme="http"):
+def serve(root, port=8080, markdown_template=None, scheme="http", stylesheet=None):
     root = abspath(root)
     if not isdir(root):
         logger.error("Error: `{}` is not a directory".format(root))
@@ -132,6 +148,7 @@ def serve(root, port=8080, markdown_template=None, scheme="http"):
             root=root,
             markdown_template=markdown_template,
             root_url=root_url,
+            stylesheet=stylesheet,
         )
         try:
             httpd.serve_forever()
@@ -166,10 +183,21 @@ def main():
         help="Path to an alternate HTML template for Markdown files",
     )
     parser.add_argument(
+        "--stylesheet",
+        default=None,
+        type=argparse.FileType("r"),
+        help="Path to a custom stylesheet",
+    )
+    parser.add_argument(
         "--version", action="store_true", default=False, help="Return version and exit"
     )
     args = parser.parse_args()
     if args.version:
         print(f"Static Markdown v{__version__}")
         return
-    serve(root=args.root, port=args.port, markdown_template=args.markdown_template)
+    serve(
+        root=args.root,
+        port=args.port,
+        markdown_template=args.markdown_template,
+        stylesheet=args.stylesheet,
+    )
