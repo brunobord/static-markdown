@@ -1,11 +1,16 @@
 # Changelog
 
-## master (unreleased)
+## v0.3.0 (2019-10-05)
+
+### New features
 
 * Added HEAD implementation (#7).
 * Document and make sure that the POST, PUT, DELETE and PATCH verbs would return a 405 error.
+* Enable using a custom stylesheet.
+
+### Other improvements
+
 * Default style: limit ``<img>`` width up to the page width.
-* Enable customizing stylesheet.
 
 ## v0.2.0 (2019-06-19)
 
