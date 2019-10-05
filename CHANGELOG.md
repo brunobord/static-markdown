@@ -1,5 +1,9 @@
 # Changelog
 
+## master (unreleased)
+
+Nothing here yet.
+
 ## v0.3.0 (2019-10-05)
 
 ### New features
