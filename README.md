@@ -5,6 +5,7 @@ A static web server with markdown rendering feature.
 It serves regular HTTP content (HTML, JS, CSS, images, etc), but when you're browsing a ``.md``, ``.mdown`` or ``.markdown`` file, it's converted into HTML and rendered as a (hopefully) readable page.
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/static-markdown)
+![Travis CI status](https://img.shields.io/travis/com/brunobord/static-markdown)
 
 ## IMPORTANT WARNING
 

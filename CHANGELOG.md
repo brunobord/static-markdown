@@ -6,6 +6,7 @@
 * Add/Confirm Python 3.8 compatibility (#10).
 * Add/Confirm Python 3.9 compatibility (#11).
 * Added the compatibility badges - courtesy of shields.io (#15).
+* Added the Travis CI badge - also switched from travis-ci.org to the .com instance, hopefully more future-proof (#17).
 
 ## v0.3.0 (2019-10-05)
 
