@@ -5,6 +5,7 @@
 * Fixed CI & solved regressions by upgrading of `pytest-xprocess` & `Markdown` libraries.
 * Add/Confirm Python 3.8 compatibility (#10).
 * Add/Confirm Python 3.9 compatibility (#11).
+* Added the compatibility badges - courtesy of shields.io (#15).
 
 ## v0.3.0 (2019-10-05)
 
