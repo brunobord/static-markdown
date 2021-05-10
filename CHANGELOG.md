@@ -1,5 +1,9 @@
 # Changelog
 
+## master (unreleased)
+
+Nothing here yet.
+
 ## v0.4.0 (2021-05-10)
 
 ### New features
