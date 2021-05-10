@@ -3,6 +3,7 @@
 ## master (unreleased)
 
 * Fixed CI & solved regressions by upgrading of `pytest-xprocess` & `Markdown` libraries.
+* Add/Confirm Python 3.8 compatibility (#10).
 
 ## v0.3.0 (2019-10-05)
 
