@@ -15,8 +15,11 @@ def http_server(xprocess):
         pattern = "Serving"
         args = ["python", f"{executable_dir}/cli.py", example_dir]
 
-    server = xprocess.ensure("server-default", Starter)
-    return server
+    _ = xprocess.ensure("server-default", Starter)
+    info = xprocess.getinfo("server-default")
+    assert info.isrunning()
+    yield info
+    xprocess.getinfo("server-default").terminate()
 
 
 @pytest.fixture
@@ -33,5 +36,8 @@ def http_server_custom_style(xprocess):
             "8081",
         ]
 
-    server = xprocess.ensure("server-custom-css", Starter)
-    return server
+    _ = xprocess.ensure("server-custom-css", Starter)
+    info = xprocess.getinfo("server-custom-css")
+    assert info.isrunning()
+    yield info
+    xprocess.getinfo("server-custom-css").terminate()

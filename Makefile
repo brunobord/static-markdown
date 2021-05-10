@@ -29,4 +29,4 @@ clean:
 # Cleanup pytest utilities
 xkill:
 	$(VENV)pytest --xkill
-	rm -Rf .xprocess
+	rm -Rf .pytest_cache/d/.xprocess

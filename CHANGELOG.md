@@ -2,7 +2,7 @@
 
 ## master (unreleased)
 
-Nothing here yet.
+* Fixed CI & solved regressions by upgrading of `pytest-xprocess` & `Markdown` libraries.
 
 ## v0.3.0 (2019-10-05)
 

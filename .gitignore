@@ -8,3 +8,4 @@ dist/
 # Test stuff
 .tox
 .xprocess/
+.pytest_cache/
